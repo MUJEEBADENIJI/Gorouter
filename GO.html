@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GO Router Dashboard</title>
+    <link rel="stylesheet" href="GO.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>GO Router</h2>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#device-management">Device Management</a></li>
+            <li><a href="#bandwidth-management">Bandwidth</a></li>
+            <li><a href="#security-settings">Security</a></li>
+            <li><a href="#logs">Logs</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header>
+            <h1>Welcome to GO Router Dashboard</h1>
+            <button id="start-stop-btn">Start Hotspot</button>
+        </header>
+
+        <!-- Overview Section -->
+        <section id="overview">
+            <h2>Hotspot Overview</h2>
+            <p>Status: <span id="status">Inactive</span></p>
+            <p>Connected Devices: <span id="connected-devices">0</span></p>
+        </section>
+
+        <!-- Device Management Section -->
+        <section id="device-management">
+            <h2>Manage Devices</h2>
+            <p>Connected Devices List:</p>
+            <ul id="device-list">
+                <!-- Dynamically filled with connected devices -->
+            </ul>
+        </section>
+
+        <!-- Bandwidth Management Section -->
+        <section id="bandwidth-management">
+            <h2>Bandwidth Allocation</h2>
+            <form id="bandwidth-form">
+                <label for="device">Device:</label>
+                <select id="device" name="device">
+                    <!-- Device options will be populated dynamically -->
+                </select>
+                <label for="bandwidth">Bandwidth Limit (Mbps):</label>
+                <input type="number" id="bandwidth" name="bandwidth" min="1" max="100" required>
+                <button type="submit">Set Bandwidth</button>
+            </form>
+        </section>
+
+        <!-- Security Settings Section -->
+        <section id="security-settings">
+            <h2>Security Settings</h2>
+            <label for="ssid">SSID:</label>
+            <input type="text" id="ssid" name="ssid" placeholder="Enter SSID">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter Password">
+            <button id="update-security">Update Security</button>
+        </section>
+
+        <!-- Logs Section -->
+        <section id="logs">
+            <h2>Activity Logs</h2>
+            <button id="view-logs">View Logs</button>
+            <div id="log-container">
+                <!-- Logs will appear here -->
+            </div>
+        </section>
+    </div>
+
+    <script src="GO.js"></script>
+</body>
+</html>

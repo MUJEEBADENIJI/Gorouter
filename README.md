@@ -1,9 +1,9 @@
 # GoRoute
 
-Code.Page.18=> v . 1 . 1,<br>
+Code.Page.18=> v . 1 . 1 <br>
 GoRoute <br>
 a product of : <br>
-      Frontend : Html / Css / Javascript  / HTMX <br>
+      Frontend : Html / Css / Javascript  / HTMX /<br>
       Backend : Go + (Gin) + (Nat) + (Net) + (Gopacket )+ (Crypto) + (Cobra) / <br>
       Database : SQL + (Sqlite) /  <br>
       Server : Gin Http Server /   <br>

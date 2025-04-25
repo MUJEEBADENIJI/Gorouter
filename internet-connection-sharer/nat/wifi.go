@@ -15,18 +15,14 @@ type WiFiNetwork struct {
 	SecurityType string
 }
 
-// EnableWiFi turns on the WiFi adapter programmatically
+// EnableWiFi turns on the WiFi adapter (Admin required)
 func EnableWiFi() error {
-	cmd := exec.Command("netsh", "interface", "set", "interface", "Wi-Fi", "admin=enabled")
-	var out bytes.Buffer
-	cmd.Stdout = &out
-	cmd.Stderr = &out
-
+	cmd := exec.Command("cmd", "/C", "netsh interface set interface name=\"Wi-Fi\" admin=enabled")
 	err := cmd.Run()
 	if err != nil {
-		return fmt.Errorf("failed to enable WiFi: %v (%s)", err, out.String())
+		return fmt.Errorf("failed to enable WiFi: %v", err)
 	}
-
+	fmt.Println("✅ WiFi enabled successfully.")
 	return nil
 }
 
@@ -77,8 +73,13 @@ func parseWiFiNetworks(output string) []WiFiNetwork {
 	return networks
 }
 
-// DisplayWiFiNetworks prints available networks
+// DisplayWiFiNetworks enables WiFi (if off) and prints available networks
 func DisplayWiFiNetworks() {
+	err := EnableWiFi()
+	if err != nil {
+		fmt.Println("⚠️ Could not enable WiFi automatically. Please enable it manually.")
+	}
+
 	networks, err := ScanWiFiNetworks()
 	if err != nil {
 		fmt.Println("❌ Error scanning WiFi networks:", err)

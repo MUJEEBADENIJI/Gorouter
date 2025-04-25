@@ -20,8 +20,13 @@ r.GET("/dashboard", func(c *gin.Context) {
 	c.HTML(200, "dashboard.html", gin.H{})
 })
 
+r.GET("/overview", func(c *gin.Context) {
+	c.HTML(200, "overview.html", gin.H{})
+})
 
-
+r.GET("/Devicemanagement", func(c *gin.Context) {
+	c.HTML(200, "Devicemanagement.html", gin.H{})
+})
 
 
 

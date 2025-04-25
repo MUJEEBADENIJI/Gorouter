@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package nat
 
 import (
@@ -9,57 +8,6 @@ import (
 	"strings"
 )
 
-<<<<<<<< HEAD:internet-connection-sharer/gorouteweb/main.go
-=======
-package main
-
-import (
-	"github.com/gin-gonic/gin"
-)
-
->>>>>>> goleft
-func main() {
-	r := gin.Default()
-	r.LoadHTMLGlob("templates/*")
-
-	r.GET("/", func(c *gin.Context) {
-		c.HTML(200, "index.html", gin.H{})
-	})
-
-
-//everytime you want to add a new page
-//u  must register the route like this
-
-r.GET("/dashboard", func(c *gin.Context) {
-	c.HTML(200, "dashboard.html", gin.H{})
-})
-
-<<<<<<< HEAD
-r.GET("/overview", func(c *gin.Context) {
-	c.HTML(200, "overview.html", gin.H{})
-})
-
-r.GET("/Devicemanagement", func(c *gin.Context) {
-	c.HTML(200, "Devicemanagement.html", gin.H{})
-})
-=======
-
-
->>>>>>> goleft
-
-
-
-
-
-
-
-
-
-
-//do not touch this..... be careful please .
-	r.Run(":5005")
-<<<<<<< HEAD
-========
 // WiFiNetwork represents a detected WiFi network
 type WiFiNetwork struct {
 	SSID         string
@@ -67,18 +15,14 @@ type WiFiNetwork struct {
 	SecurityType string
 }
 
-// EnableWiFi turns on the WiFi adapter programmatically
+// EnableWiFi turns on the WiFi adapter (Admin required)
 func EnableWiFi() error {
-	cmd := exec.Command("netsh", "interface", "set", "interface", "Wi-Fi", "admin=enabled")
-	var out bytes.Buffer
-	cmd.Stdout = &out
-	cmd.Stderr = &out
-
+	cmd := exec.Command("cmd", "/C", "netsh interface set interface name=\"Wi-Fi\" admin=enabled")
 	err := cmd.Run()
 	if err != nil {
-		return fmt.Errorf("failed to enable WiFi: %v (%s)", err, out.String())
+		return fmt.Errorf("failed to enable WiFi: %v", err)
 	}
-
+	fmt.Println("✅ WiFi enabled successfully.")
 	return nil
 }
 
@@ -129,8 +73,13 @@ func parseWiFiNetworks(output string) []WiFiNetwork {
 	return networks
 }
 
-// DisplayWiFiNetworks prints available networks
+// DisplayWiFiNetworks enables WiFi (if off) and prints available networks
 func DisplayWiFiNetworks() {
+	err := EnableWiFi()
+	if err != nil {
+		fmt.Println("⚠️ Could not enable WiFi automatically. Please enable it manually.")
+	}
+
 	networks, err := ScanWiFiNetworks()
 	if err != nil {
 		fmt.Println("❌ Error scanning WiFi networks:", err)
@@ -146,7 +95,4 @@ func DisplayWiFiNetworks() {
 	for i, net := range networks {
 		fmt.Printf("%d. SSID: %s | Signal: %s | Security: %s\n", i+1, net.SSID, net.Signal, net.SecurityType)
 	}
->>>>>>>> goleft:internet-connection-sharer/main.go
-=======
->>>>>>> goleft
 }

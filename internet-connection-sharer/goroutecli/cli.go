@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package main
 
 import (
@@ -6,11 +7,23 @@ import (
 )
 
 func main() {
+=======
+package cli
+
+import (
+	"github.com/spf13/cobra"
+	"example.com/internet-connection-sharer/goroutecli/commands"
+
+)
+
+func NewRootCommand() *cobra.Command {
+>>>>>>> goleft
 	rootCmd := &cobra.Command{
 		Use:   "gore",
 		Short: "Go Router",
 	}
 
+<<<<<<< HEAD
 	startCmd := &cobra.Command{
 		Use:   "goroar",
 		Short: "Start the Go Router",
@@ -44,4 +57,10 @@ func main() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 	}
+=======
+	goroarCmd := commands.NewGoroarCommand()
+	rootCmd.AddCommand(goroarCmd)
+
+	return rootCmd
+>>>>>>> goleft
 }

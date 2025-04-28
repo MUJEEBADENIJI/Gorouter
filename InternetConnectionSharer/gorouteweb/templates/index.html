@@ -1,4 +1,3 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,18 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="/static/css/style.css">  <!-- Link to CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> <!-- FontAwesome Icons -->
 </head>
 <body>
-    {{ template "sidebar" . }} <!-- Reuse sidebar component -->
+    <!-- Include Sidebar -->
+    {{ template "sidebar" . }}
 
     <div class="index-content">
-        <h1>Welcome to the Dashboard</h1>
-        <p>This is the homepage where you can see the overview of the application.</p>
-        {{ template "reader" . }} <!-- Reuse reader component -->
+        <h1>manual for use..</h1>
+    
     </div>
 
-    {{ template "footer" . }} <!-- Reuse footer component -->
+    <!-- Include Footer -->
+    {{ template "footer" . }}
 
-    <script src="/static/js/script.js" defer></script>    <!-- Link to JS -->
+    <script src="/static/js/script.js" defer></script> <!-- Link to JS -->
 </body>
 </html>

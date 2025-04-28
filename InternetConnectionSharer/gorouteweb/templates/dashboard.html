@@ -1,64 +1,27 @@
-<!-- templates/dashboard.html -->
 <!DOCTYPE html>
-<html>
-<<<<<<< HEAD
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/static/css/style.css">  <!-- Link to CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> <!-- FontAwesome Icons -->
+</head>
+<body>
+    <!-- Include Sidebar -->
+    {{ template "sidebar" . }}
 
-<style>
-	* {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-	}
-	.sidebar {
-		width: 250px;
-		background-color: #333;
-		color: #fff;
-		position: fixed;
-		height: 100vh;
-		padding: 20px;
-	}
-	.sidebar h2 {
-		text-align: center;
-		margin-bottom: 20px;
-	}
-	.sidebar ul {
-		list-style: none;
-	}
-	.sidebar ul li {
-		margin: 15px 0;
-	}
-	.sidebar ul li a {
-		color: #fff;
-		text-decoration: none;
-		font-size: 16px;
-	}
-	.sidebar ul li a:hover {
-		color: #4CAF50;
-	}
-	h1{
-		text-align: center;
-	}
-	</style>
-<body>
-	
-		<div class="sidebar">
-        <h2>GO Router</h2>
-        <ul>
-			<li><a href="/">Home</a>
-            <li><a href="/overview">Overview</a></li>
-            <li><a href="/device-management">Device Management</a></li>
-            <li><a href="bandwidth-management.html">Bandwidth</a></li>
-            <li><a href="security-settings.html">Security</a></li>
-            <li><a href="logs.html">Logs</a></li>
-        </ul>
+    <div class="index-content">
+        <h1>Welcome to the Dashboard</h1>
+        <p>This is the homepage where you can see the overview of the application. You can manage devices, check network stats, and adjust settings from here.</p>
+
+        <!-- You can add a reader component or any other dynamic content below -->
+        {{ template "reader" . }} <!-- Reuse any other dynamic content component -->
     </div>
-	<header>
-		<h1>Welcome to the GO Router!</h1>
-	</header>
-=======
-<body>
-	<h1>Welcome to the Internet Connection Sharer!</h1>
-	<p><a href="/">Go home</a></p>
->>>>>>> goleft
+
+    <!-- Include Footer -->
+    {{ template "footer" . }}
+
+    <script src="/static/js/script.js" defer></script> <!-- Link to JS -->
 </body>
 </html>

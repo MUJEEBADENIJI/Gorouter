@@ -35,4 +35,12 @@ func RegisterRoutes(router *gin.Engine) {
 	router.GET("/Devicemanagement", func(c *gin.Context) {
 		c.HTML(200, "Devicemanagement.html", commonData)
 	})
+
+	router.GET("/security", func(c *gin.Context) {
+		c.HTML(200, "security.html", commonData)
+	})
+
+	router.GET("/log", func(c *gin.Context) {
+		c.HTML(200, "log.html", commonData)
+	})
 }

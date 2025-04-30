@@ -1,0 +1,85 @@
+
+<!-- templates/security.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Settings</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<style>
+    /* Security Page */
+.main-content {
+    margin-left: 270px;
+    padding: 40px;
+    padding-bottom: 100px; /* room for fixed footer */
+}
+
+.main-content h1 {
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.security-form {
+    background: #f4f4f4;
+    padding: 20px;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.security-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.security-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.security-form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.security-form button:hover {
+    background-color: #45a049;
+}
+
+</style>
+
+    {{ template "sidebar" . }}
+
+    <div class="main-content">
+        <h1>Security Settings</h1>
+
+        <form action="/update-security" method="POST" class="security-form">
+            <label for="ssid">SSID:</label>
+            <input type="text" id="ssid" name="ssid" placeholder="Enter your network name" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+            <button type="submit">Update Settings</button>
+        </form>
+    </div>
+
+    {{ template "footer" . }}
+
+    <script src="/static/js/script.js" defer></script>
+</body>
+</html>

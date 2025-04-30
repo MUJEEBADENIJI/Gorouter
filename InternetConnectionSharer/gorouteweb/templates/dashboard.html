@@ -3,25 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Overview - GO Router</title>
     <link rel="stylesheet" href="/static/css/style.css">  <!-- Link to CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> <!-- FontAwesome Icons -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            position: fixed;
+            height: 100vh;
+            padding: 20px;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .sidebar ul li a:hover {
+            color: #4CAF50;
+        }
+        .main-content {
+            margin-left: 270px;
+            padding: 20px;
+        }
+        header h1 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 150px;
+            height: 150px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 43%;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.3s ease;
+        }
+        button.active {
+            background-color: #e53935; /* red when active */
+            animation: ripple 5s infinite;
+        }
+        @keyframes ripple {
+            0% {
+                box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 100px rgba(229, 57, 53, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 50px rgba(229, 57, 53, 0);
+            }
+        }
+    
+        #timer {
+    
+    margin-top: -30px;
+    margin-left:700px;
+    background-color: #fff;
+    color: #333;
+    padding: 8px 14px;
+    border-radius: 1px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    font-weight: bold;
+    font-size: 15px;
+    z-index: 100;
+}      
+
+
+.reader {
+    background-color: #0a0a0a;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 90px;
+    height: 100px;
+    overflow-y: auto;
+    
+}
+
+.reader p {
+    font-size: 16px;
+    color: #333;
+}
+    </style>
+    
 </head>
 <body>
-    <!-- Include Sidebar -->
-    {{ template "sidebar" . }}
-
-    <div class="index-content">
-        <h1>Welcome to the Dashboard</h1>
-        <p>This is the homepage where you can see the overview of the application. You can manage devices, check network stats, and adjust settings from here.</p>
-
-        <!-- You can add a reader component or any other dynamic content below -->
-        {{ template "reader" . }} <!-- Reuse any other dynamic content component -->
+   
+     <!-- Include Sidebar -->
+     {{ template "sidebar" . }}
+    
+    <div class="main-content">
+       
+        <header>
+            <h1>Dashboard</h1>
+        </header>
+        <section>
+         <p>Status: <span id="status">Inactive</span></p>
+         <p>Connected Devices: <span id="connected-devices">0/8</span></p>
+         <p id="timer">Uptime: 00:00:00</p>
+         <p>Network Type: <span id="network-type">Wi-Fi</span></p>
+        <button id="start-stop-btn">Start Hotspot</button>
+        </section>
+         <!-- Include Reader -->
+    {{ template "reader" . }}
+ 
     </div>
-
+    
     <!-- Include Footer -->
     {{ template "footer" . }}
 
-    <script src="/static/js/script.js" defer></script> <!-- Link to JS -->
+ <script>
+    let startTime = null;
+    let intervalId = null;
+
+    document.getElementById('start-stop-btn').addEventListener('click', function () {
+        const status = document.getElementById('status');
+        const timer = document.getElementById('timer');
+
+        if (status.textContent === 'Inactive') {
+            status.textContent = 'Active';
+            this.textContent = 'Stop Hotspot';
+            this.classList.add('active');
+            startTime = new Date();
+            intervalId = setInterval(() => {
+                const now = new Date();
+                const diff = new Date(now - startTime);
+                const hours = String(diff.getUTCHours()).padStart(2, '0');
+                const minutes = String(diff.getUTCMinutes()).padStart(2, '0');
+                const seconds = String(diff.getUTCSeconds()).padStart(2, '0');
+                timer.textContent = `Uptime: ${hours}:${minutes}:${seconds}`;
+            }, 1000);
+        } else {
+            status.textContent = 'Inactive';
+            this.textContent = 'Start Hotspot';
+            this.classList.remove('active');
+            clearInterval(intervalId);
+            timer.textContent = `Uptime: 00:00:00`;
+        }
+    });
+</script>
+
 </body>
 </html>

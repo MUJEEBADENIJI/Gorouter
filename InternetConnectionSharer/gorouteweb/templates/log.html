@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logs</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<style>
+ /* Logs Page */
+.logs-section {
+    margin-left: 270px; /* Align with sidebar */
+    padding: 40px 20px 120px; /* Extra bottom padding for footer spacing */
+    min-height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.logs-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    color: #333;
+}
+
+.logs-section h2 i {
+    margin-right: 10px;
+    color: #4CAF50;
+}
+
+#view-logs {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+#view-logs:hover {
+    background-color: #45a049;
+}
+
+#log-container {
+    background: #fff;
+    margin-top: 20px;
+    padding: 20px;
+    max-width: 800px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#log-container p {
+    color: #444;
+    font-size: 15px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+
+</style>
+
+    {{ template "sidebar" . }}
+
+    <div class="main-content">
+        <h1>Activity Logs</h1>
+        <div class="log-container">
+            <p>No logs available yet.</p> <!-- Placeholder for now -->
+        </div>
+    </div>
+
+    {{ template "footer" . }}
+    <script>
+        document.getElementById('view-logs').addEventListener('click', function () {
+            const container = document.getElementById('log-container');
+            container.innerHTML = `
+                <p>[2025-04-29 14:23:01] Hotspot started</p>
+                <p>[2025-04-29 14:25:13] Device connected: 192.168.0.12</p>
+                <p>[2025-04-29 14:26:45] Bandwidth adjusted for 192.168.0.12</p>`;
+        });
+    </script>
+    <script src="/static/js/script.js" defer></script> <!-- Link to JS -->    
+</body>
+</html>
+

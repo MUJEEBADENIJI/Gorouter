@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Overview - GO Router</title>
-    <link rel="stylesheet" href="/static/css/style.css">  <!-- Link to CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> <!-- FontAwesome Icons -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - GO Router</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         .sidebar {
             width: 250px;
             background-color: #333;
@@ -20,24 +16,13 @@
             height: 100vh;
             padding: 20px;
         }
-        .sidebar h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .sidebar ul {
-            list-style: none;
-        }
-        .sidebar ul li {
-            margin: 15px 0;
-        }
+        .sidebar h2 { text-align: center; margin-bottom: 20px; }
+        .sidebar ul { list-style: none; }
+        .sidebar ul li { margin: 15px 0; }
         .sidebar ul li a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 16px;
+            color: #fff; text-decoration: none; font-size: 16px;
         }
-        .sidebar ul li a:hover {
-            color: #4CAF50;
-        }
+        .sidebar ul li a:hover { color: #4CAF50; }
         .main-content {
             margin-left: 270px;
             padding: 20px;
@@ -46,140 +31,141 @@
             margin-bottom: 20px;
             text-align: center;
         }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
+        .status-panel {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            font-weight: bold;
+        }
+        #hotspotBtn {
+            margin: 60px auto 0;
+            display: block;
             width: 150px;
             height: 150px;
-            font-size: 14px;
+            border: none;
+            border-radius: 50%;
+            font-size: 16px;
+            color: white;
+            background-color: #4CAF50;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: 43%;
-            margin-top: 80px;
+            text-align: center;
             position: relative;
-            overflow: hidden;
-            transition: background-color 0.3s ease;
         }
-        button.active {
-            background-color: #e53935; /* red when active */
-            animation: ripple 5s infinite;
+        #hotspotBtn.active {
+            background-color: #e53935;
+            animation: ripple 2s infinite;
         }
         @keyframes ripple {
-            0% {
-                box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 100px rgba(229, 57, 53, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 50px rgba(229, 57, 53, 0);
-            }
+            0% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.7); }
+            70% { box-shadow: 0 0 0 60px rgba(229, 57, 53, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0); }
         }
-    
-        #timer {
-    
-    margin-top: -30px;
-    margin-left:700px;
-    background-color: #fff;
-    color: #333;
-    padding: 8px 14px;
-    border-radius: 1px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    font-weight: bold;
-    font-size: 15px;
-    z-index: 100;
-}      
-
-#network{
-    margin-top: -50px;
-    margin-left:700px;
-    background-color: #fff;
-    color: #333;
-    padding: 8px 14px;
-    
-    font-weight: bold;
-    font-size: 15px;
-    z-index: 100;
-}
-
-.reader {
-    background-color: #0a0a0a;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 90px;
-    height: 100px;
-    overflow-y: auto;
-    
-}
-
-.reader p {
-    font-size: 16px;
-    color: #333;
-}
+        .reader {
+            background-color: #0a0a0a;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+            height: 100px;
+            overflow-y: auto;
+        }
+        .reader p { font-size: 16px; color: #fff; }
     </style>
-    
 </head>
 <body>
-   
-     <!-- Include Sidebar -->
-     {{ template "sidebar" . }}
-    
+
+    {{ template "sidebar" . }}
+
     <div class="main-content">
-       
         <header>
             <h1>Dashboard</h1>
         </header>
-        <section>
-         <p>Status: <span id="status">Inactive</span></p>
-         <p>Connected Devices: <span id="connected-devices">0/8</span></p>
-         <p id="timer">Uptime: 00:00:00</p>
-         <p id="network">Network Type: <span id="network-type">Wi-Fi</span></p>
-        <button id="start-stop-btn">Start Hotspot</button>
-        </section>
-         <!-- Include Reader -->
-    {{ template "reader" . }}
- 
+
+        <div class="status-panel">
+            <span>Status: <span id="statusText">{{if .Active}}Active{{else}}Inactive{{end}}</span></span>
+            <span>Uptime: <span id="uptimeText">{{.Uptime}}</span></span>
+            <span>Connected Users: <span id="connectedUsers">0</span></span>
+        </div>
+
+        <button id="hotspotBtn" class="{{if .Active}}active{{end}}">
+            {{if .Active}}Stop Hotspot{{else}}Start Hotspot{{end}}
+        </button>
+
+        {{ template "reader" . }}
     </div>
-    
-    <!-- Include Footer -->
+
     {{ template "footer" . }}
 
- <script>
-    let startTime = null;
+    <script>
+    let isActive = {{if .Active}}true{{else}}false{{end}};
     let intervalId = null;
 
-    document.getElementById('start-stop-btn').addEventListener('click', function () {
-        const status = document.getElementById('status');
-        const timer = document.getElementById('timer');
+    function startTimer(startTime) {
+        const uptimeText = document.getElementById('uptimeText');
+        intervalId = setInterval(() => {
+            const now = new Date();
+            const diff = new Date(now - startTime);
+            const hours = String(diff.getUTCHours()).padStart(2, '0');
+            const minutes = String(diff.getUTCMinutes()).padStart(2, '0');
+            const seconds = String(diff.getUTCSeconds()).padStart(2, '0');
+            uptimeText.textContent = `${hours}:${minutes}:${seconds}`;
+        }, 1000);
+    }
 
-        if (status.textContent === 'Inactive') {
-            status.textContent = 'Active';
-            this.textContent = 'Stop Hotspot';
-            this.classList.add('active');
-            startTime = new Date();
-            intervalId = setInterval(() => {
-                const now = new Date();
-                const diff = new Date(now - startTime);
-                const hours = String(diff.getUTCHours()).padStart(2, '0');
-                const minutes = String(diff.getUTCMinutes()).padStart(2, '0');
-                const seconds = String(diff.getUTCSeconds()).padStart(2, '0');
-                timer.textContent = `Uptime: ${hours}:${minutes}:${seconds}`;
-            }, 1000);
+    function stopTimer() {
+        clearInterval(intervalId);
+        document.getElementById('uptimeText').textContent = '00:00:00';
+    }
+
+    document.getElementById('hotspotBtn').addEventListener('click', function() {
+        const btn = this;
+        const statusText = document.getElementById('statusText');
+        const connectedUsers = document.getElementById('connectedUsers');
+
+        if (!isActive) {
+            fetch('/api/start-hotspot', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    isActive = true;
+                    btn.classList.add('active');
+                    btn.textContent = 'Stop Hotspot';
+                    statusText.textContent = 'Active';
+                    connectedUsers.textContent = data.connectedUsers || 1; // mock 1 user for now
+                    stopTimer();
+                    startTimer(new Date());
+                } else {
+                    alert(data.message || 'Failed to start hotspot.');
+                }
+            })
+            .catch(() => alert('Error starting hotspot.'));
         } else {
-            status.textContent = 'Inactive';
-            this.textContent = 'Start Hotspot';
-            this.classList.remove('active');
-            clearInterval(intervalId);
-            timer.textContent = `Uptime: 00:00:00`;
+            fetch('/api/stop-hotspot', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    isActive = false;
+                    btn.classList.remove('active');
+                    btn.textContent = 'Start Hotspot';
+                    statusText.textContent = 'Inactive';
+                    connectedUsers.textContent = '0';
+                    stopTimer();
+                } else {
+                    alert(data.message || 'Failed to stop hotspot.');
+                }
+            })
+            .catch(() => alert('Error stopping hotspot.'));
         }
     });
-</script>
-
+    </script>
 </body>
 </html>

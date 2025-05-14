@@ -1,0 +1,29 @@
+{{ define "status" }}
+<div id="status-section">
+    <p>Status: <span id="status">{{if .Active}}Active{{else}}Inactive{{end}}</span></p>
+    <p id="timer">Uptime: {{.Uptime}}</p>
+    <button id="start-stop-btn" class="{{if .Active}}active{{end}}">
+        {{if .Active}}Stop Hotspot{{else}}Start Hotspot{{end}}
+    </button>
+</div>
+{{ end }}
+
+
+<script>
+(function () {
+  const isActive = {{.Active}};
+  if (!isActive) return;
+
+  const uptimeEl = document.getElementById("uptime");
+  const [h, m, s] = uptimeEl.textContent.split(":").map(Number);
+  let total = h * 3600 + m * 60 + s;
+
+  setInterval(() => {
+    total++;
+    const hours = String(Math.floor(total / 3600)).padStart(2, '0');
+    const minutes = String(Math.floor((total % 3600) / 60)).padStart(2, '0');
+    const seconds = String(total % 60).padStart(2, '0');
+    uptimeEl.textContent = `${hours}:${minutes}:${seconds}`;
+  }, 1000);
+})();
+</script>

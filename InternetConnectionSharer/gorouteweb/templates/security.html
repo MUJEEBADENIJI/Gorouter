@@ -70,10 +70,14 @@
         <form action="/update-security" method="POST" class="security-form">
             <label for="ssid">SSID:</label>
             <input type="text" id="ssid" name="ssid" placeholder="Enter your network name" required>
-
+        
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" placeholder="Enter your password" required>
-
+        
+            <label for="maxUsers">Max Connected Users:</label>
+            <input type="number" id="maxUsers" name="maxUsers" min="1" max="7" placeholder="e.g. 7" required>
+            
+        
             <button type="submit">Update Settings</button>
         </form>
     </div>

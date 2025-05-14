@@ -89,6 +89,18 @@
         <header>
             <h1>Dashboard</h1>
         </header>
+<<<<<<< HEAD
+        <section>
+         <p>Status: <span id="status">Inactive</span></p>
+         <p>Connected Devices: <span id="connected-devices">0/7</span></p>
+         <p id="timer">Uptime: 00:00:00</p>
+         <p id="network">Network Type: <span id="network-type">Wi-Fi</span></p>
+        <button id="start-stop-btn">Start Hotspot</button>
+        </section>
+         <!-- Include Reader -->
+    {{ template "reader" . }}
+ 
+=======
 
         <div class="status-panel">
             <span>Status: <span id="statusText">{{if .Active}}Active{{else}}Inactive{{end}}</span></span>
@@ -101,6 +113,7 @@
         </button>
 
         {{ template "reader" . }}
+>>>>>>> main
     </div>
 
     {{ template "footer" . }}

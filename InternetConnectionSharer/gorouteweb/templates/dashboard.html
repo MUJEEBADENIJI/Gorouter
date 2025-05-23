@@ -83,87 +83,78 @@
 </head>
 <body>
 
-    {{ template "sidebar" . }}
+  {{ template "sidebar" . }}
 
-    <div class="main-content">
-        <header>
-            <h1>Dashboard</h1>
-        </header>
-<<<<<<< HEAD
-        <section>
-         <p>Status: <span id="status">Inactive</span></p>
-         <p>Connected Devices: <span id="connected-devices">0/7</span></p>
-         <p id="timer">Uptime: 00:00:00</p>
-         <p id="network">Network Type: <span id="network-type">Wi-Fi</span></p>
-        <button id="start-stop-btn">Start Hotspot</button>
-        </section>
-         <!-- Include Reader -->
+  <div class="main-content">
+    <header>
+      <h1>Dashboard</h1>
+    </header>
+
+    <section>
+      <div class="status-panel">
+        <span>Status: <span id="statusText">{{if .Active}}Active{{else}}Inactive{{end}}</span></span>
+        <span>Uptime: <span id="uptimeText">{{.Uptime}}</span></span>
+        <span>Connected Users: <span id="connectedUsers">0</span></span>
+      </div>
+
+      <button id="hotspotBtn" class="{{if .Active}}active{{end}}">
+        {{if .Active}}Stop Hotspot{{else}}Start Hotspot{{end}}
+      </button>
+    </section>
+
     {{ template "reader" . }}
- 
-=======
+  </div>
 
-        <div class="status-panel">
-            <span>Status: <span id="statusText">{{if .Active}}Active{{else}}Inactive{{end}}</span></span>
-            <span>Uptime: <span id="uptimeText">{{.Uptime}}</span></span>
-            <span>Connected Users: <span id="connectedUsers">0</span></span>
-        </div>
+  {{ template "footer" . }}
 
-        <button id="hotspotBtn" class="{{if .Active}}active{{end}}">
-            {{if .Active}}Stop Hotspot{{else}}Start Hotspot{{end}}
-        </button>
+  <script>
+let isActive = {{if .Active}}true{{else}}false{{end}};
+let intervalId = null;
+let startTime = null;
 
-        {{ template "reader" . }}
->>>>>>> main
-    </div>
+function startTimer() {
+    const uptimeText = document.getElementById('uptimeText');
+    startTime = new Date();
 
-    {{ template "footer" . }}
+    intervalId = setInterval(() => {
+        const now = new Date();
+        const diff = new Date(now - startTime);
+        const hours = String(diff.getUTCHours()).padStart(2, '0');
+        const minutes = String(diff.getUTCMinutes()).padStart(2, '0');
+        const seconds = String(diff.getUTCSeconds()).padStart(2, '0');
+        uptimeText.textContent = `${hours}:${minutes}:${seconds}`;
+    }, 1000);
+}
 
-    <script>
-    let isActive = {{if .Active}}true{{else}}false{{end}};
-    let intervalId = null;
+function stopTimer() {
+    clearInterval(intervalId);
+    document.getElementById('uptimeText').textContent = '00:00:00';
+}
 
-    function startTimer(startTime) {
-        const uptimeText = document.getElementById('uptimeText');
-        intervalId = setInterval(() => {
-            const now = new Date();
-            const diff = new Date(now - startTime);
-            const hours = String(diff.getUTCHours()).padStart(2, '0');
-            const minutes = String(diff.getUTCMinutes()).padStart(2, '0');
-            const seconds = String(diff.getUTCSeconds()).padStart(2, '0');
-            uptimeText.textContent = `${hours}:${minutes}:${seconds}`;
-        }, 1000);
-    }
+document.getElementById('hotspotBtn').addEventListener('click', function() {
+    const btn = this;
+    const statusText = document.getElementById('statusText');
+    const connectedUsers = document.getElementById('connectedUsers');
 
-    function stopTimer() {
-        clearInterval(intervalId);
-        document.getElementById('uptimeText').textContent = '00:00:00';
-    }
-
-    document.getElementById('hotspotBtn').addEventListener('click', function() {
-        const btn = this;
-        const statusText = document.getElementById('statusText');
-        const connectedUsers = document.getElementById('connectedUsers');
-
-        if (!isActive) {
-            fetch('/api/start-hotspot', { method: 'POST' })
-            .then(response => response.json())
+    if (!isActive) {
+        fetch('/api/start-hotspot', { method: 'POST' })
+            .then(res => res.json())
             .then(data => {
                 if (data.success) {
                     isActive = true;
                     btn.classList.add('active');
                     btn.textContent = 'Stop Hotspot';
                     statusText.textContent = 'Active';
-                    connectedUsers.textContent = data.connectedUsers || 1; // mock 1 user for now
+                    connectedUsers.textContent = data.connectedUsers || 1;
                     stopTimer();
-                    startTimer(new Date());
+                    startTimer();
                 } else {
-                    alert(data.message || 'Failed to start hotspot.');
+                    alert(data.message || 'Failed to start hotspot');
                 }
-            })
-            .catch(() => alert('Error starting hotspot.'));
-        } else {
-            fetch('/api/stop-hotspot', { method: 'POST' })
-            .then(response => response.json())
+            });
+    } else {
+        fetch('/api/stop-hotspot', { method: 'POST' })
+            .then(res => res.json())
             .then(data => {
                 if (data.success) {
                     isActive = false;
@@ -173,12 +164,11 @@
                     connectedUsers.textContent = '0';
                     stopTimer();
                 } else {
-                    alert(data.message || 'Failed to stop hotspot.');
+                    alert(data.message || 'Failed to stop hotspot');
                 }
-            })
-            .catch(() => alert('Error stopping hotspot.'));
-        }
-    });
-    </script>
+            });
+    }
+});
+  </script>
 </body>
 </html>
